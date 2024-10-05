@@ -1,0 +1,28 @@
+Remember to base64 encode secrets before storing them here!
+
+``` sh
+echo "secret" | base64
+```
+
+Secrets should look something like:
+
+``` yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: <secret_name>
+  namespace: <secret_namespace>
+type: Opaque
+data:
+  token: |-
+    <BASE64_ENCODED_SECRET>
+```
+
+Then encrypt the secret with:
+
+``` sh
+sops --age=$AGE_TARGET \
+    --encrypt \
+    --encrypted-regex '^(data|stringData)$' \
+    <secret_file>.yaml > ./secrets/<encrypted_secret_file>.yaml
+```
