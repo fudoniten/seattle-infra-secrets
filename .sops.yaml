@@ -1,0 +1,11 @@
+# Client-side SOPS configuration.
+#
+# Flux's source-controller excludes '**/.sops.yaml' from the artifacts it
+# builds, so this file is never seen by kustomize-controller.
+#
+# The recipient below is the Seattle cluster's age public key and must stay
+# identical to cluster.agekey.public ('seattle-secret check' verifies this).
+creation_rules:
+  - path_regex: secrets/.*\.ya?ml$
+    encrypted_regex: ^(data|stringData)$
+    age: age1rn4hhhfgpu8dak5pm4qckpya7xlzpj3zz4ed5q533rmyry55s5rqwjdcj4
